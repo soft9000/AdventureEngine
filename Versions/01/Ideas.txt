@@ -1,0 +1,49 @@
+--- Randall Asks ---
+Greetings Paul,
+
+
+This is a nice design. Would be great for my students to use.
+
+Mind if we update it for use with Python 3?
+
+--- Paul Responds ---
+Please, by my guest! Where do you teach? What grade are your students?
+
+The game loop is good for any kind of REPL (read-execute-print-loop) interactive console. Start with an empty or base initialized engine/execution environment (we used to call them "Virtual Machines", but with computer virtualization, that has taken on such a specific form that it is more confusing than helpful). Have a parser that takes a command and either raises a syntax error or returns a compiled Command object. Apply the Command to the Engine, including any other context (such as the adventureEngine's Player). Rinse and repeat until the Engine state is "finished".
+
+Also, when I posted this code more widely, I got quite a bit of feedback from the IF (Interactive Fiction) community, that my language left out a number of IF conventions. Here is a link to an IF cheat sheet card - it implicitly defines your game vocabulary or "grammar" as we say in parsing talk. http://eblong.com/zarf/pic/play-if-card.png  Google for "interactive fiction" for other references/resources.
+
+Invite your students to improve on my design:
+- Openable vs Usable vs Takeable - defining these with inheritance is clunky, especially when you want something that is both Takeable and Openable. Mixin classes with multiple inheritance might have been better here
+- All Items are accessed by their short name "shovel", "key", "mailbox". This makes it confusing when there is a gold key, and you can't enter "take key" but must say "take gold key". Figure out how to support synonyms, and what to do when two different items have the same synonym (like a gold key and a silver key). In fact, writing a new adventure around collecting different keys might be interesting.
+- If you add Potions or other elements that must be mixed or combined, how does that change the Item model?
+- Sometimes Openables can be locked - how to manage the locked state?
+- How could this game engine be served in a web service with multiple Players? Each in their own game Engine, or playing together in a shared game Engine (both are possible).
+- Analyze/critique the current design. Which parts are generic and which are specific to this particular game? (for example, the basic adventure Engine itself does not know about "shovel" or "mailbox" or "library" - these game-specific items are separately defined). Sometimes when designing a program, developers mistakenly assume "there will only be one X so I'll just make that a global object" where X is a Player, or a Database, or a Screen, or an Engine. This is the Singleton Pattern (or Anti-Pattern). Even if you only have one, package it in an object and reference through the object. Then when you find you want to add more Players or more concurrent Engines, the global object becomes an element of a registry of some kind.
+- And of course, use the engine to create your own game adventure, with puzzles to solve, traps to avoid, locks to unlock, etc.
+
+Some things to add:
+- Front door can't be opened until they ring the doorbell
+- A one-way door
+- A puzzle that requires the right code to be entered
+- A room with no obvious way out, but using an item or saying a word saves
+- Keep a log of interesting things done or seen by a Player, and print the log at the end of the game (or just print the Player's inventory)
+- Keep a score of points for finding treasures or solving puzzles (if there are points for finding and entering a hidden room, don't keep adding points if they exit and enter the room multiple times)
+- How to add monsters, and how to fight them (this could be pretty challenging)
+- A hidden map that shows all the rooms and doors
+
+If you are on Facebook, please post a note on the Pyparsing page.
+
+-- Paul
+
+--- Randall Responds ---
+Wow - that is allot of great information. Thank you!
+
+The students I have in mind for this project are all adults. Presently weighing in at about 400, the community to take their first crack at that feature list will be here in the Tampa-Bay area.
+
+Having a DoD background, we have recently been getting involved in non-profit work as well. Targeting U.S Veterans needing to upgrade their employment prospects, my hope is to offer an opportunity for all-willing to pump-up their resumes by joining a community built around a cross-platform gaming concept.
+
+Will also tell everyone about the Pyparsing page, as well.
+
+Thank you!
+
